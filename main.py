@@ -1,14 +1,36 @@
 from tkinter import*
 import menu
 def set_status(text, color='black'):
-    pass
+    canvas.itemconfig(text_id, text=text, fill=color)
 
 def key_handler(event):
-    pass
+    if game_over:
+        return
+    if event.keycode == KEY_PLAYER1:
+        canvas.move(player1, SPEED, 0)
+    if event.keycode == KEY_PLAYER2:
+        canvas.move(player2, SPEED, 0)
+
+    check_finish()
 
 
 def check_finish():
-    pass
+    global game_over
+    coords_player1 = canvas.coords(player1)
+    coords_player2 = canvas.coords(player2)
+    coords_finish = canvas.coords(finish_id)
+
+    x1_right = coords_player1[2]
+    x2_right = coords_player2[2]
+    x_finish = coords_finish[0]
+
+    if x1_right >= x_finish:
+        set_status('Победа верхнего игрока', player1_color)
+        game_over = True
+
+    if x2_right >= x_finish:
+        set_status('Победа нижнего игрока', player2_color)
+        game_over = True
 # область глобальных переменных
 game_width = 800
 game_height = 800
@@ -59,7 +81,7 @@ text_id = canvas.create_text(x1,
                              anchor=SW,
                              font=('Arial', '25'),
                              text='Вперед!')
-menu.menu_create(canvas)
+#menu.menu_create(canvas)
 
 
 window.bind('<KeyRelease>', key_handler)
