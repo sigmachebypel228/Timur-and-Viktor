@@ -4,6 +4,27 @@ def set_status(text, color='black'):
     canvas.itemconfig(text_id, text=text, fill=color)
 
 def key_handler(event):
+    if event.keycode == KEY_UP:
+        menu.menu_up(canvas)
+    if event.keycode == KEY_DOWN:
+        menu.menu_down(canvas)
+    if event.keycode == KEY_ENTER:
+        menu.menu_enter(canvas, player1, player2)
+
+    if game_over:
+        return
+    if event.keycode == KEY_PAUSE:
+        menu.pause_toggle()
+        set_status('Пауза')
+    if menu.pause:
+        return
+    if event.keycode == KEY_ESC:
+        menu.menu_toggle(canvas)
+
+    if menu.menu_mode:
+        return
+
+    set_status('Вперед!')
     if game_over:
         return
     if event.keycode == KEY_PLAYER1:
