@@ -4,6 +4,7 @@ def set_status(text, color='black'):
     canvas.itemconfig(text_id, text=text, fill=color)
 
 def key_handler(event):
+    global KEY_PLAYER1, KEY_PLAYER2, SPEED, x1, x2, game_over,pause
     if event.keycode == KEY_UP:
         menu.menu_up(canvas)
     if event.keycode == KEY_DOWN:
@@ -24,7 +25,8 @@ def key_handler(event):
     if menu.menu_mode:
         return
 
-    set_status('Вперед!')
+        set_status('Вперед!')
+
     if game_over:
         return
     if event.keycode == KEY_PLAYER1:
