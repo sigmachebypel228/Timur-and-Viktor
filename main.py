@@ -25,7 +25,7 @@ def key_handler(event):
     if menu.menu_mode:
         return
 
-        set_status('Вперед!')
+    set_status('Вперед!')
 
     if game_over:
         return
@@ -104,7 +104,7 @@ text_id = canvas.create_text(x1,
                              anchor=SW,
                              font=('Arial', '25'),
                              text='Вперед!')
-#menu.menu_create(canvas)
+menu.menu_create(canvas)
 
 
 window.bind('<KeyRelease>', key_handler)

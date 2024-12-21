@@ -1,36 +1,32 @@
 from tkinter import *
-from main import*
+
 from pickle import*
 def pause_toggle():
     global pause
     pause = not pause
-    if pause:
-        set_status('ПАУЗА')
-    else:
-        set_status('ВПЕРЕД!')
 
-def menu_toggle():
+def menu_toggle(canvas):
     global menu_mode
     menu_mode = not menu_mode
     if menu_mode:
-        menu_show()
+        menu_show(canvas)
     else:
-        menu_hide()
-def menu_enter():
+        menu_hide(canvas)
+def menu_enter(canvas, player1, player2):
     if menu_current_index == 0:
         game_resume()
     elif menu_current_index == 1:
-        game_new()
+        game_new(canvas, player1, player2)
     elif menu_current_index == 2:
-        game_save()
+        game_save(canvas, player1, player2)
     elif menu_current_index == 3:
-        game_load()
+        game_load(canvas, player1, player2)
     elif menu_current_index == 4:
         game_exit()
-    menu_hide()
+    menu_hide(canvas)
 
 
-def game_new():
+def game_new(canvas, player1, player2):
     # menu_toggle()
     x1, y1 = 50, 50
     x2, y2 = x1, y1 + player_size + 100
@@ -52,7 +48,7 @@ def game_resume():
 
 
 
-def game_save():
+def game_save(canvas, player1, player2):
     print('Сохраняем игру')
     # 1
     x1 =  canvas.coords(player1)[0]
@@ -60,10 +56,9 @@ def game_save():
     data = [x1, x2]
     with open('save.dat', 'wb') as f:
         dump(data, f)
-        set_status('Сохранено', color='yellow')
 
 
-def game_load():
+def game_load(canvas, player1, player2):
     print('Загружаем игру')
     # 2
     global x1, x2
@@ -74,7 +69,7 @@ def game_load():
                       y1 + player_size)
         canvas.coords(player2, x2, y2, x2 + player_size,
                       y2 + player_size)
-        set_status('Загружено', color='yellow')
+
 
 
 def game_exit():
@@ -82,34 +77,34 @@ def game_exit():
     exit()
 
 
-def menu_show():
+def menu_show(canvas):
     global menu_mode
     menu_mode = True
-    menu_update()
+    menu_update(canvas)
 
-def menu_hide():
+def menu_hide(canvas):
     global menu_mode
     menu_mode = False
-    menu_update()
+    menu_update(canvas)
 
 
-def menu_up():
+def menu_up(canvas):
     global menu_current_index
     menu_current_index -= 1
     if menu_current_index < 0:
         menu_current_index = 0
-    menu_update()
+    menu_update(canvas)
 
 
-def menu_down():
+def menu_down(canvas):
     global menu_current_index
     menu_current_index += 1
     if menu_current_index > len(menu_options) - 1:
         menu_current_index = len(menu_options) - 1
-    menu_update()
+    menu_update(canvas)
 
 
-def menu_update():
+def menu_update(canvas):
     for menu_index in range(len(menu_options_id)):
         element_id = menu_options_id[menu_index]
         if menu_mode:
@@ -129,7 +124,7 @@ def menu_create(canvas):
                                        fill='black')
         menu_options_id.append(option_id)
         offest += 50
-    menu_update()
+    menu_update(canvas)
 
 
 
